@@ -506,150 +506,424 @@
         </div>
     </div>
 
-    <!-- ══════════ SLIDE 11: LAB ══════════ -->
+    <!-- ══════════ SLIDES 11-19: INDIVIDUAL ANIMAL DIGITIZING ══════════ -->
+
     <div id="slide11" class="slide">
         <div class="nav-bar">
-            <button class="nav-btn" onclick="goSlide(11,-1)">Back</button>
-            <button class="nav-btn" disabled>Next</button>
+            <button class="nav-btn" onclick="goSlide(11,-1)">&#9664; Back</button>
+            <button class="nav-btn" onclick="animalNext(11)">Go to Baboon &#9658;</button>
         </div>
-
-        <!-- VIDEO SELECTION SCREEN -->
-        <div id="setupSection">
-            <div class="video-section">
-                <h3 style="color:#2d7a7a; text-align:center; font-size:20px; margin-bottom:20px;">Select an Animal to Digitize</h3>
-                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; max-width:700px; margin:0 auto;">
-                    <div class="vid-card" onclick="selectVideo('https://lshapiro66.github.io/Gait-lab/Ringed%20Tail.mp4','Ring-tailed Lemur')">
-                        
-                        <div class="vid-card-label">Ring-tailed Lemur</div>
-                    </div>
-                    <div class="vid-card" onclick="selectVideo('https://lshapiro66.github.io/Gait-lab/Adultbaboon%20Walk.mp4','Adult Baboon')">
-                        
-                        <div class="vid-card-label">Adult Baboon</div>
-                    </div>
-                    <div class="vid-card" onclick="selectVideo('https://lshapiro66.github.io/Gait-lab/Chimpanzee%20Adult%20Walk.mp4','Adult Chimpanzee')">
-                        
-                        <div class="vid-card-label">Adult Chimpanzee</div>
-                    </div>
-                    <div class="vid-card" onclick="selectVideo('https://lshapiro66.github.io/Gait-lab/Zebra%20Walk.mp4','Zebra')">
-                        
-                        <div class="vid-card-label">Zebra</div>
-                    </div>
-                    <div class="vid-card" onclick="selectVideo('https://lshapiro66.github.io/Gait-lab/Giraffe%20Walk.mp4','Giraffe')">
-                        
-                        <div class="vid-card-label">Giraffe</div>
-                    </div>
-                    <div class="vid-card" onclick="selectVideo('https://lshapiro66.github.io/Gait-lab/Lioness%20Walk.mp4','Lion')">
-                        
-                        <div class="vid-card-label">Lion</div>
-                    </div>
-                    <div class="vid-card" onclick="selectVideo('https://lshapiro66.github.io/Gait-lab/Capybara%20Walk.mp4','Capybara')">
-                        
-                        <div class="vid-card-label">Capybara</div>
-                    </div>
-                    <div class="vid-card" onclick="selectVideo('https://lshapiro66.github.io/Gait-lab/Kinkajou%20Walk.mp4','Kinkajou')">
-                        
-                        <div class="vid-card-label">Kinkajou</div>
-                    </div>
-                    <div class="vid-card" onclick="selectVideo('https://lshapiro66.github.io/Gait-lab/Youngchimpanzee%20Walk.mp4','Infant Chimpanzee')">
-                        
-                        <div class="vid-card-label">Infant Chimpanzee</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- LAB SECTION: video + plot always side by side -->
-        <div id="labSection" style="display: none;">
+        <div style="max-width:1100px; margin:0 auto;">
             <div class="content">
-                <!-- LEFT: video controls + event marking + results -->
                 <div class="video-section">
-                    <h3 id="videoTitle">Video Player</h3>
-                    <video id="gaitVideo" class="lab-video" controls></video>
-
+                    <h3 style="color:#2d7a7a; text-align:center;">Ring-tailed Lemur</h3>
+                    <video id="vid11" class="lab-video" controls src="https://lshapiro66.github.io/Gait-lab/Ringed%20Tail.mp4"></video>
                     <div class="controls">
-                        <button onclick="stepFrame(-5)">&#9668;&#9668; -5 frames</button>
-                        <button onclick="stepFrame(-1)">&#9668; -1 frame</button>
-                        <button onclick="stepFrame(1)">+1 frame &#9658;</button>
-                        <button onclick="stepFrame(5)">+5 frames &#9658;&#9658;</button>
+                        <button onclick="vidStep('vid11',-5)">&#9668;&#9668; -5 frames</button>
+                        <button onclick="vidStep('vid11',-1)">&#9668; -1 frame</button>
+                        <button onclick="vidStep('vid11',1)">+1 frame &#9658;</button>
+                        <button onclick="vidStep('vid11',5)">+5 frames &#9658;&#9658;</button>
                     </div>
-
-                    <div style="text-align: center; font-weight: bold; margin: 10px 0;">
-                        <span id="frameInfo">Frame: 0</span>
+                    <div style="text-align:center; font-weight:bold; margin:8px 0;"><span id="frame11">Frame: 0</span></div>
+                    <h3>Mark Gait Events</h3>
+                    <button onclick="animalMark(11,'hindlimbTD')" style="width:100%; padding:14px;">Hindlimb Touchdown</button>
+                    <button onclick="animalMark(11,'forelimbTD')" style="width:100%; padding:14px;">Ipsilateral Forelimb Touchdown</button>
+                    <button onclick="animalMark(11,'hindlimbLO')" style="width:100%; padding:14px;">Hindlimb Lift-off</button>
+                    <button onclick="animalMark(11,'hindlimbTD2')" style="width:100%; padding:14px;">Hindlimb Touchdown 2</button>
+                    <div class="data-fields">
+                        <div class="data-field"><label>Hindlimb TD</label><span id="v11_hindlimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Forelimb TD</label><span id="v11_forelimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb LO</label><span id="v11_hindlimbLO">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb TD2</label><span id="v11_hindlimbTD2">&#8212;</span></div>
                     </div>
-
-                    <!-- Event marking — hidden after calculation -->
-                    <div id="eventSection">
-                        <button onclick="goToVideoList()" style="width: 100%; padding: 10px; margin-bottom: 10px; background-color: #aaa;">&#8592; Choose a Different Video</button>
-                        <h3>Mark Gait Events</h3>
-                        <button onclick="markEvent('hindlimbTD')" style="width: 100%; padding: 15px;">Hindlimb Touchdown</button>
-                        <button onclick="markEvent('forelimbTD')" style="width: 100%; padding: 15px;">Ipsilateral Forelimb Touchdown</button>
-                        <button onclick="markEvent('hindlimbLO')" style="width: 100%; padding: 15px;">Hindlimb Lift-off</button>
-                        <button onclick="markEvent('hindlimbTD2')" style="width: 100%; padding: 15px;">Hindlimb Touchdown 2</button>
-
-                        <div class="data-fields">
-                            <div class="data-field">
-                                <label>Hindlimb TD</label>
-                                <span id="val_hindlimbTD">&#8212;</span>
-                            </div>
-                            <div class="data-field">
-                                <label>Forelimb TD</label>
-                                <span id="val_forelimbTD">&#8212;</span>
-                            </div>
-                            <div class="data-field">
-                                <label>Hindlimb LO</label>
-                                <span id="val_hindlimbLO">&#8212;</span>
-                            </div>
-                            <div class="data-field">
-                                <label>Hindlimb TD2</label>
-                                <span id="val_hindlimbTD2">&#8212;</span>
-                            </div>
-                        </div>
-
-                        <button onclick="calculate()" class="button-yellow" style="width: 100%; padding: 15px; font-size: 16px;">Calculate Gait Metrics</button>
-                    </div>
-
-                    <!-- Results — shown after calculation -->
-                    <div id="resultsBox" style="display: none;" class="results-box">
+                    <button onclick="animalCalculate(11,'Ring-tailed Lemur')" class="button-yellow" style="width:100%; padding:15px; font-size:16px;">Calculate Gait Metrics</button>
+                    <div id="res11" style="display:none;" class="results-box">
                         <h3>Results</h3>
                         <div class="metric-row">
-                            <div class="metric">
-                                <div class="metric-label">Duty Factor</div>
-                                <div class="metric-value" id="result_dutyFactor">&#8212;</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-label">Gait Number</div>
-                                <div class="metric-value" id="result_gaitNumber">&#8212;</div>
-                            </div>
+                            <div class="metric"><div class="metric-label">Duty Factor</div><div class="metric-value" id="r11_df">&#8212;</div></div>
+                            <div class="metric"><div class="metric-label">Gait Number</div><div class="metric-value" id="r11_gn">&#8212;</div></div>
                         </div>
-                        <div class="metric-full">
-                            <div class="metric-label">Gait Type</div>
-                            <div style="font-size: 18px; color: #333; margin-top: 4px;" id="result_gaitType">&#8212;</div>
-                        </div>
-                        <button onclick="goToVideoList()" class="button-green" style="width: 100%; padding: 15px; font-size: 16px; margin-top: 5px;">
-                            &#8592; Choose Another Video
-                        </button>
-                        <button onclick="generateAnswerSheet()" style="width: 100%; padding: 15px; font-size: 16px; margin-top: 8px; background-color: #2d7a7a;">
-                            &#128438; Generate Answer Sheet (opens in new tab)
-                        </button>
-                        <p style="font-size: 12px; color: #666; text-align: center; margin: 4px 0 0;">The answer sheet opens in a new tab — you can return here to digitize more videos.</p>
-                        <hr style="margin: 14px 0; border-color: #ccc;">
-                        <button onclick="goToComparative()" style="width: 100%; padding: 15px; font-size: 16px; background-color: #b06000; color: white; border-radius: 5px; border: none; cursor: pointer;">
-                            &#9654; I'm done with all videos — Go to Comparative Analysis
-                        </button>
+                        <div class="metric-full"><div class="metric-label">Gait Type</div><div style="font-size:16px;color:#333;margin-top:4px;" id="r11_gt">&#8212;</div></div>
                     </div>
                 </div>
-
-                <!-- RIGHT: Hildebrand plot — always visible -->
                 <div class="plot-section">
                     <h3>Hildebrand Plot</h3>
-                    <div id="plotContainer"></div>
+                    <div id="plot11"></div>
                 </div>
             </div>
         </div>
     </div><!-- end slide11 -->
 
-    <!-- ══════════ SLIDE 12: COMPARATIVE ANALYSIS ══════════ -->
     <div id="slide12" class="slide">
+        <div class="nav-bar">
+            <button class="nav-btn" onclick="goSlide(12,-1)">&#9664; Back</button>
+            <button class="nav-btn" onclick="animalNext(12)">Go to Adult Chimp &#9658;</button>
+        </div>
+        <div style="max-width:1100px; margin:0 auto;">
+            <div class="content">
+                <div class="video-section">
+                    <h3 style="color:#2d7a7a; text-align:center;">Adult Baboon</h3>
+                    <video id="vid12" class="lab-video" controls src="https://lshapiro66.github.io/Gait-lab/Adultbaboon%20Walk.mp4"></video>
+                    <div class="controls">
+                        <button onclick="vidStep('vid12',-5)">&#9668;&#9668; -5 frames</button>
+                        <button onclick="vidStep('vid12',-1)">&#9668; -1 frame</button>
+                        <button onclick="vidStep('vid12',1)">+1 frame &#9658;</button>
+                        <button onclick="vidStep('vid12',5)">+5 frames &#9658;&#9658;</button>
+                    </div>
+                    <div style="text-align:center; font-weight:bold; margin:8px 0;"><span id="frame12">Frame: 0</span></div>
+                    <h3>Mark Gait Events</h3>
+                    <button onclick="animalMark(12,'hindlimbTD')" style="width:100%; padding:14px;">Hindlimb Touchdown</button>
+                    <button onclick="animalMark(12,'forelimbTD')" style="width:100%; padding:14px;">Ipsilateral Forelimb Touchdown</button>
+                    <button onclick="animalMark(12,'hindlimbLO')" style="width:100%; padding:14px;">Hindlimb Lift-off</button>
+                    <button onclick="animalMark(12,'hindlimbTD2')" style="width:100%; padding:14px;">Hindlimb Touchdown 2</button>
+                    <div class="data-fields">
+                        <div class="data-field"><label>Hindlimb TD</label><span id="v12_hindlimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Forelimb TD</label><span id="v12_forelimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb LO</label><span id="v12_hindlimbLO">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb TD2</label><span id="v12_hindlimbTD2">&#8212;</span></div>
+                    </div>
+                    <button onclick="animalCalculate(12,'Adult Baboon')" class="button-yellow" style="width:100%; padding:15px; font-size:16px;">Calculate Gait Metrics</button>
+                    <div id="res12" style="display:none;" class="results-box">
+                        <h3>Results</h3>
+                        <div class="metric-row">
+                            <div class="metric"><div class="metric-label">Duty Factor</div><div class="metric-value" id="r12_df">&#8212;</div></div>
+                            <div class="metric"><div class="metric-label">Gait Number</div><div class="metric-value" id="r12_gn">&#8212;</div></div>
+                        </div>
+                        <div class="metric-full"><div class="metric-label">Gait Type</div><div style="font-size:16px;color:#333;margin-top:4px;" id="r12_gt">&#8212;</div></div>
+                    </div>
+                </div>
+                <div class="plot-section">
+                    <h3>Hildebrand Plot</h3>
+                    <div id="plot12"></div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end slide12 -->
+
+    <div id="slide13" class="slide">
+        <div class="nav-bar">
+            <button class="nav-btn" onclick="goSlide(13,-1)">&#9664; Back</button>
+            <button class="nav-btn" onclick="animalNext(13)">Go to Zebra &#9658;</button>
+        </div>
+        <div style="max-width:1100px; margin:0 auto;">
+            <div class="content">
+                <div class="video-section">
+                    <h3 style="color:#2d7a7a; text-align:center;">Adult Chimpanzee</h3>
+                    <video id="vid13" class="lab-video" controls src="https://lshapiro66.github.io/Gait-lab/Chimpanzee%20Adult%20Walk.mp4"></video>
+                    <div class="controls">
+                        <button onclick="vidStep('vid13',-5)">&#9668;&#9668; -5 frames</button>
+                        <button onclick="vidStep('vid13',-1)">&#9668; -1 frame</button>
+                        <button onclick="vidStep('vid13',1)">+1 frame &#9658;</button>
+                        <button onclick="vidStep('vid13',5)">+5 frames &#9658;&#9658;</button>
+                    </div>
+                    <div style="text-align:center; font-weight:bold; margin:8px 0;"><span id="frame13">Frame: 0</span></div>
+                    <h3>Mark Gait Events</h3>
+                    <button onclick="animalMark(13,'hindlimbTD')" style="width:100%; padding:14px;">Hindlimb Touchdown</button>
+                    <button onclick="animalMark(13,'forelimbTD')" style="width:100%; padding:14px;">Ipsilateral Forelimb Touchdown</button>
+                    <button onclick="animalMark(13,'hindlimbLO')" style="width:100%; padding:14px;">Hindlimb Lift-off</button>
+                    <button onclick="animalMark(13,'hindlimbTD2')" style="width:100%; padding:14px;">Hindlimb Touchdown 2</button>
+                    <div class="data-fields">
+                        <div class="data-field"><label>Hindlimb TD</label><span id="v13_hindlimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Forelimb TD</label><span id="v13_forelimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb LO</label><span id="v13_hindlimbLO">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb TD2</label><span id="v13_hindlimbTD2">&#8212;</span></div>
+                    </div>
+                    <button onclick="animalCalculate(13,'Adult Chimpanzee')" class="button-yellow" style="width:100%; padding:15px; font-size:16px;">Calculate Gait Metrics</button>
+                    <div id="res13" style="display:none;" class="results-box">
+                        <h3>Results</h3>
+                        <div class="metric-row">
+                            <div class="metric"><div class="metric-label">Duty Factor</div><div class="metric-value" id="r13_df">&#8212;</div></div>
+                            <div class="metric"><div class="metric-label">Gait Number</div><div class="metric-value" id="r13_gn">&#8212;</div></div>
+                        </div>
+                        <div class="metric-full"><div class="metric-label">Gait Type</div><div style="font-size:16px;color:#333;margin-top:4px;" id="r13_gt">&#8212;</div></div>
+                    </div>
+                </div>
+                <div class="plot-section">
+                    <h3>Hildebrand Plot</h3>
+                    <div id="plot13"></div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end slide13 -->
+
+    <div id="slide14" class="slide">
+        <div class="nav-bar">
+            <button class="nav-btn" onclick="goSlide(14,-1)">&#9664; Back</button>
+            <button class="nav-btn" onclick="animalNext(14)">Go to Giraffe &#9658;</button>
+        </div>
+        <div style="max-width:1100px; margin:0 auto;">
+            <div class="content">
+                <div class="video-section">
+                    <h3 style="color:#2d7a7a; text-align:center;">Zebra</h3>
+                    <video id="vid14" class="lab-video" controls src="https://lshapiro66.github.io/Gait-lab/Zebra%20Walk.mp4"></video>
+                    <div class="controls">
+                        <button onclick="vidStep('vid14',-5)">&#9668;&#9668; -5 frames</button>
+                        <button onclick="vidStep('vid14',-1)">&#9668; -1 frame</button>
+                        <button onclick="vidStep('vid14',1)">+1 frame &#9658;</button>
+                        <button onclick="vidStep('vid14',5)">+5 frames &#9658;&#9658;</button>
+                    </div>
+                    <div style="text-align:center; font-weight:bold; margin:8px 0;"><span id="frame14">Frame: 0</span></div>
+                    <h3>Mark Gait Events</h3>
+                    <button onclick="animalMark(14,'hindlimbTD')" style="width:100%; padding:14px;">Hindlimb Touchdown</button>
+                    <button onclick="animalMark(14,'forelimbTD')" style="width:100%; padding:14px;">Ipsilateral Forelimb Touchdown</button>
+                    <button onclick="animalMark(14,'hindlimbLO')" style="width:100%; padding:14px;">Hindlimb Lift-off</button>
+                    <button onclick="animalMark(14,'hindlimbTD2')" style="width:100%; padding:14px;">Hindlimb Touchdown 2</button>
+                    <div class="data-fields">
+                        <div class="data-field"><label>Hindlimb TD</label><span id="v14_hindlimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Forelimb TD</label><span id="v14_forelimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb LO</label><span id="v14_hindlimbLO">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb TD2</label><span id="v14_hindlimbTD2">&#8212;</span></div>
+                    </div>
+                    <button onclick="animalCalculate(14,'Zebra')" class="button-yellow" style="width:100%; padding:15px; font-size:16px;">Calculate Gait Metrics</button>
+                    <div id="res14" style="display:none;" class="results-box">
+                        <h3>Results</h3>
+                        <div class="metric-row">
+                            <div class="metric"><div class="metric-label">Duty Factor</div><div class="metric-value" id="r14_df">&#8212;</div></div>
+                            <div class="metric"><div class="metric-label">Gait Number</div><div class="metric-value" id="r14_gn">&#8212;</div></div>
+                        </div>
+                        <div class="metric-full"><div class="metric-label">Gait Type</div><div style="font-size:16px;color:#333;margin-top:4px;" id="r14_gt">&#8212;</div></div>
+                    </div>
+                </div>
+                <div class="plot-section">
+                    <h3>Hildebrand Plot</h3>
+                    <div id="plot14"></div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end slide14 -->
+
+    <div id="slide15" class="slide">
+        <div class="nav-bar">
+            <button class="nav-btn" onclick="goSlide(15,-1)">&#9664; Back</button>
+            <button class="nav-btn" onclick="animalNext(15)">Go to Lion &#9658;</button>
+        </div>
+        <div style="max-width:1100px; margin:0 auto;">
+            <div class="content">
+                <div class="video-section">
+                    <h3 style="color:#2d7a7a; text-align:center;">Giraffe</h3>
+                    <video id="vid15" class="lab-video" controls src="https://lshapiro66.github.io/Gait-lab/Giraffe%20Walk.mp4"></video>
+                    <div class="controls">
+                        <button onclick="vidStep('vid15',-5)">&#9668;&#9668; -5 frames</button>
+                        <button onclick="vidStep('vid15',-1)">&#9668; -1 frame</button>
+                        <button onclick="vidStep('vid15',1)">+1 frame &#9658;</button>
+                        <button onclick="vidStep('vid15',5)">+5 frames &#9658;&#9658;</button>
+                    </div>
+                    <div style="text-align:center; font-weight:bold; margin:8px 0;"><span id="frame15">Frame: 0</span></div>
+                    <h3>Mark Gait Events</h3>
+                    <button onclick="animalMark(15,'hindlimbTD')" style="width:100%; padding:14px;">Hindlimb Touchdown</button>
+                    <button onclick="animalMark(15,'forelimbTD')" style="width:100%; padding:14px;">Ipsilateral Forelimb Touchdown</button>
+                    <button onclick="animalMark(15,'hindlimbLO')" style="width:100%; padding:14px;">Hindlimb Lift-off</button>
+                    <button onclick="animalMark(15,'hindlimbTD2')" style="width:100%; padding:14px;">Hindlimb Touchdown 2</button>
+                    <div class="data-fields">
+                        <div class="data-field"><label>Hindlimb TD</label><span id="v15_hindlimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Forelimb TD</label><span id="v15_forelimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb LO</label><span id="v15_hindlimbLO">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb TD2</label><span id="v15_hindlimbTD2">&#8212;</span></div>
+                    </div>
+                    <button onclick="animalCalculate(15,'Giraffe')" class="button-yellow" style="width:100%; padding:15px; font-size:16px;">Calculate Gait Metrics</button>
+                    <div id="res15" style="display:none;" class="results-box">
+                        <h3>Results</h3>
+                        <div class="metric-row">
+                            <div class="metric"><div class="metric-label">Duty Factor</div><div class="metric-value" id="r15_df">&#8212;</div></div>
+                            <div class="metric"><div class="metric-label">Gait Number</div><div class="metric-value" id="r15_gn">&#8212;</div></div>
+                        </div>
+                        <div class="metric-full"><div class="metric-label">Gait Type</div><div style="font-size:16px;color:#333;margin-top:4px;" id="r15_gt">&#8212;</div></div>
+                    </div>
+                </div>
+                <div class="plot-section">
+                    <h3>Hildebrand Plot</h3>
+                    <div id="plot15"></div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end slide15 -->
+
+    <div id="slide16" class="slide">
+        <div class="nav-bar">
+            <button class="nav-btn" onclick="goSlide(16,-1)">&#9664; Back</button>
+            <button class="nav-btn" onclick="animalNext(16)">Go to Capybara &#9658;</button>
+        </div>
+        <div style="max-width:1100px; margin:0 auto;">
+            <div class="content">
+                <div class="video-section">
+                    <h3 style="color:#2d7a7a; text-align:center;">Lion</h3>
+                    <video id="vid16" class="lab-video" controls src="https://lshapiro66.github.io/Gait-lab/Lioness%20Walk.mp4"></video>
+                    <div class="controls">
+                        <button onclick="vidStep('vid16',-5)">&#9668;&#9668; -5 frames</button>
+                        <button onclick="vidStep('vid16',-1)">&#9668; -1 frame</button>
+                        <button onclick="vidStep('vid16',1)">+1 frame &#9658;</button>
+                        <button onclick="vidStep('vid16',5)">+5 frames &#9658;&#9658;</button>
+                    </div>
+                    <div style="text-align:center; font-weight:bold; margin:8px 0;"><span id="frame16">Frame: 0</span></div>
+                    <h3>Mark Gait Events</h3>
+                    <button onclick="animalMark(16,'hindlimbTD')" style="width:100%; padding:14px;">Hindlimb Touchdown</button>
+                    <button onclick="animalMark(16,'forelimbTD')" style="width:100%; padding:14px;">Ipsilateral Forelimb Touchdown</button>
+                    <button onclick="animalMark(16,'hindlimbLO')" style="width:100%; padding:14px;">Hindlimb Lift-off</button>
+                    <button onclick="animalMark(16,'hindlimbTD2')" style="width:100%; padding:14px;">Hindlimb Touchdown 2</button>
+                    <div class="data-fields">
+                        <div class="data-field"><label>Hindlimb TD</label><span id="v16_hindlimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Forelimb TD</label><span id="v16_forelimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb LO</label><span id="v16_hindlimbLO">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb TD2</label><span id="v16_hindlimbTD2">&#8212;</span></div>
+                    </div>
+                    <button onclick="animalCalculate(16,'Lion')" class="button-yellow" style="width:100%; padding:15px; font-size:16px;">Calculate Gait Metrics</button>
+                    <div id="res16" style="display:none;" class="results-box">
+                        <h3>Results</h3>
+                        <div class="metric-row">
+                            <div class="metric"><div class="metric-label">Duty Factor</div><div class="metric-value" id="r16_df">&#8212;</div></div>
+                            <div class="metric"><div class="metric-label">Gait Number</div><div class="metric-value" id="r16_gn">&#8212;</div></div>
+                        </div>
+                        <div class="metric-full"><div class="metric-label">Gait Type</div><div style="font-size:16px;color:#333;margin-top:4px;" id="r16_gt">&#8212;</div></div>
+                    </div>
+                </div>
+                <div class="plot-section">
+                    <h3>Hildebrand Plot</h3>
+                    <div id="plot16"></div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end slide16 -->
+
+    <div id="slide17" class="slide">
+        <div class="nav-bar">
+            <button class="nav-btn" onclick="goSlide(17,-1)">&#9664; Back</button>
+            <button class="nav-btn" onclick="animalNext(17)">Go to Kinkajou &#9658;</button>
+        </div>
+        <div style="max-width:1100px; margin:0 auto;">
+            <div class="content">
+                <div class="video-section">
+                    <h3 style="color:#2d7a7a; text-align:center;">Capybara</h3>
+                    <video id="vid17" class="lab-video" controls src="https://lshapiro66.github.io/Gait-lab/Capybara%20Walk.mp4"></video>
+                    <div class="controls">
+                        <button onclick="vidStep('vid17',-5)">&#9668;&#9668; -5 frames</button>
+                        <button onclick="vidStep('vid17',-1)">&#9668; -1 frame</button>
+                        <button onclick="vidStep('vid17',1)">+1 frame &#9658;</button>
+                        <button onclick="vidStep('vid17',5)">+5 frames &#9658;&#9658;</button>
+                    </div>
+                    <div style="text-align:center; font-weight:bold; margin:8px 0;"><span id="frame17">Frame: 0</span></div>
+                    <h3>Mark Gait Events</h3>
+                    <button onclick="animalMark(17,'hindlimbTD')" style="width:100%; padding:14px;">Hindlimb Touchdown</button>
+                    <button onclick="animalMark(17,'forelimbTD')" style="width:100%; padding:14px;">Ipsilateral Forelimb Touchdown</button>
+                    <button onclick="animalMark(17,'hindlimbLO')" style="width:100%; padding:14px;">Hindlimb Lift-off</button>
+                    <button onclick="animalMark(17,'hindlimbTD2')" style="width:100%; padding:14px;">Hindlimb Touchdown 2</button>
+                    <div class="data-fields">
+                        <div class="data-field"><label>Hindlimb TD</label><span id="v17_hindlimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Forelimb TD</label><span id="v17_forelimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb LO</label><span id="v17_hindlimbLO">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb TD2</label><span id="v17_hindlimbTD2">&#8212;</span></div>
+                    </div>
+                    <button onclick="animalCalculate(17,'Capybara')" class="button-yellow" style="width:100%; padding:15px; font-size:16px;">Calculate Gait Metrics</button>
+                    <div id="res17" style="display:none;" class="results-box">
+                        <h3>Results</h3>
+                        <div class="metric-row">
+                            <div class="metric"><div class="metric-label">Duty Factor</div><div class="metric-value" id="r17_df">&#8212;</div></div>
+                            <div class="metric"><div class="metric-label">Gait Number</div><div class="metric-value" id="r17_gn">&#8212;</div></div>
+                        </div>
+                        <div class="metric-full"><div class="metric-label">Gait Type</div><div style="font-size:16px;color:#333;margin-top:4px;" id="r17_gt">&#8212;</div></div>
+                    </div>
+                </div>
+                <div class="plot-section">
+                    <h3>Hildebrand Plot</h3>
+                    <div id="plot17"></div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end slide17 -->
+
+    <div id="slide18" class="slide">
+        <div class="nav-bar">
+            <button class="nav-btn" onclick="goSlide(18,-1)">&#9664; Back</button>
+            <button class="nav-btn" onclick="animalNext(18)">Go to Infant Chimp &#9658;</button>
+        </div>
+        <div style="max-width:1100px; margin:0 auto;">
+            <div class="content">
+                <div class="video-section">
+                    <h3 style="color:#2d7a7a; text-align:center;">Kinkajou</h3>
+                    <video id="vid18" class="lab-video" controls src="https://lshapiro66.github.io/Gait-lab/Kinkajou%20Walk.mp4"></video>
+                    <div class="controls">
+                        <button onclick="vidStep('vid18',-5)">&#9668;&#9668; -5 frames</button>
+                        <button onclick="vidStep('vid18',-1)">&#9668; -1 frame</button>
+                        <button onclick="vidStep('vid18',1)">+1 frame &#9658;</button>
+                        <button onclick="vidStep('vid18',5)">+5 frames &#9658;&#9658;</button>
+                    </div>
+                    <div style="text-align:center; font-weight:bold; margin:8px 0;"><span id="frame18">Frame: 0</span></div>
+                    <h3>Mark Gait Events</h3>
+                    <button onclick="animalMark(18,'hindlimbTD')" style="width:100%; padding:14px;">Hindlimb Touchdown</button>
+                    <button onclick="animalMark(18,'forelimbTD')" style="width:100%; padding:14px;">Ipsilateral Forelimb Touchdown</button>
+                    <button onclick="animalMark(18,'hindlimbLO')" style="width:100%; padding:14px;">Hindlimb Lift-off</button>
+                    <button onclick="animalMark(18,'hindlimbTD2')" style="width:100%; padding:14px;">Hindlimb Touchdown 2</button>
+                    <div class="data-fields">
+                        <div class="data-field"><label>Hindlimb TD</label><span id="v18_hindlimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Forelimb TD</label><span id="v18_forelimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb LO</label><span id="v18_hindlimbLO">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb TD2</label><span id="v18_hindlimbTD2">&#8212;</span></div>
+                    </div>
+                    <button onclick="animalCalculate(18,'Kinkajou')" class="button-yellow" style="width:100%; padding:15px; font-size:16px;">Calculate Gait Metrics</button>
+                    <div id="res18" style="display:none;" class="results-box">
+                        <h3>Results</h3>
+                        <div class="metric-row">
+                            <div class="metric"><div class="metric-label">Duty Factor</div><div class="metric-value" id="r18_df">&#8212;</div></div>
+                            <div class="metric"><div class="metric-label">Gait Number</div><div class="metric-value" id="r18_gn">&#8212;</div></div>
+                        </div>
+                        <div class="metric-full"><div class="metric-label">Gait Type</div><div style="font-size:16px;color:#333;margin-top:4px;" id="r18_gt">&#8212;</div></div>
+                    </div>
+                </div>
+                <div class="plot-section">
+                    <h3>Hildebrand Plot</h3>
+                    <div id="plot18"></div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end slide18 -->
+
+    <div id="slide19" class="slide">
+        <div class="nav-bar">
+            <button class="nav-btn" onclick="goSlide(19,-1)">&#9664; Back</button>
+            <button class="nav-btn" onclick="animalNext(19)">Go to Comparative Analysis &#9658;</button>
+        </div>
+        <div style="max-width:1100px; margin:0 auto;">
+            <div class="content">
+                <div class="video-section">
+                    <h3 style="color:#2d7a7a; text-align:center;">Infant Chimpanzee</h3>
+                    <video id="vid19" class="lab-video" controls src="https://lshapiro66.github.io/Gait-lab/Youngchimpanzee%20Walk.mp4"></video>
+                    <div class="controls">
+                        <button onclick="vidStep('vid19',-5)">&#9668;&#9668; -5 frames</button>
+                        <button onclick="vidStep('vid19',-1)">&#9668; -1 frame</button>
+                        <button onclick="vidStep('vid19',1)">+1 frame &#9658;</button>
+                        <button onclick="vidStep('vid19',5)">+5 frames &#9658;&#9658;</button>
+                    </div>
+                    <div style="text-align:center; font-weight:bold; margin:8px 0;"><span id="frame19">Frame: 0</span></div>
+                    <h3>Mark Gait Events</h3>
+                    <button onclick="animalMark(19,'hindlimbTD')" style="width:100%; padding:14px;">Hindlimb Touchdown</button>
+                    <button onclick="animalMark(19,'forelimbTD')" style="width:100%; padding:14px;">Ipsilateral Forelimb Touchdown</button>
+                    <button onclick="animalMark(19,'hindlimbLO')" style="width:100%; padding:14px;">Hindlimb Lift-off</button>
+                    <button onclick="animalMark(19,'hindlimbTD2')" style="width:100%; padding:14px;">Hindlimb Touchdown 2</button>
+                    <div class="data-fields">
+                        <div class="data-field"><label>Hindlimb TD</label><span id="v19_hindlimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Forelimb TD</label><span id="v19_forelimbTD">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb LO</label><span id="v19_hindlimbLO">&#8212;</span></div>
+                        <div class="data-field"><label>Hindlimb TD2</label><span id="v19_hindlimbTD2">&#8212;</span></div>
+                    </div>
+                    <button onclick="animalCalculate(19,'Infant Chimpanzee')" class="button-yellow" style="width:100%; padding:15px; font-size:16px;">Calculate Gait Metrics</button>
+                    <div id="res19" style="display:none;" class="results-box">
+                        <h3>Results</h3>
+                        <div class="metric-row">
+                            <div class="metric"><div class="metric-label">Duty Factor</div><div class="metric-value" id="r19_df">&#8212;</div></div>
+                            <div class="metric"><div class="metric-label">Gait Number</div><div class="metric-value" id="r19_gn">&#8212;</div></div>
+                        </div>
+                        <div class="metric-full"><div class="metric-label">Gait Type</div><div style="font-size:16px;color:#333;margin-top:4px;" id="r19_gt">&#8212;</div></div>
+                    </div>
+                </div>
+                <div class="plot-section">
+                    <h3>Hildebrand Plot</h3>
+                    <div id="plot19"></div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end slide19 -->
+
+
+    <div id="slide20" class="slide">
         <div class="nav-bar">
             <button class="nav-btn" onclick="returnToVideos()">&#8592; Return to Videos</button>
             <button class="nav-btn" onclick="goDSHypothesis()">Go to DS Hypothesis &#9654;</button>
@@ -712,10 +986,10 @@
     </div><!-- end slide12 -->
 
     <!-- ══════════ SLIDE 13: DS HYPOTHESIS INTRO ══════════ -->
-    <div id="slide13" class="slide">
+    <div id="slide21" class="slide">
         <div class="nav-bar">
-            <button class="nav-btn" onclick="goSlide(13,-1)">&#8592; Return to Comparative Data</button>
-            <button class="nav-btn" onclick="goSlide(13,1)">Go to Infant 1 &#9654;</button>
+            <button class="nav-btn" onclick="goSlide(21,-1)">&#8592; Return to Comparative Data</button>
+            <button class="nav-btn" onclick="goSlide(21,1)">Go to Infant 1 &#9654;</button>
         </div>
         <div style="max-width: 960px; margin: 0 auto; color: #0d2a2a; font-size: 14px; line-height: 1.7;">
             <div class="latdiag-title-box">The Evolution of Primate Diagonal Sequence Gait: Small Branch Stability</div>
@@ -730,10 +1004,10 @@
     </div>
 
     <!-- ══════════ SLIDE 14: INFANT 1 (DSDC) ══════════ -->
-    <div id="slide14" class="slide">
+    <div id="slide22" class="slide">
         <div class="nav-bar">
-            <button class="nav-btn" onclick="goSlide(14,-1)">&#8592; Return to DS Hypothesis</button>
-            <button class="nav-btn" onclick="goSlide(14,1)">Go to Infant 2 &#9654;</button>
+            <button class="nav-btn" onclick="goSlide(22,-1)">&#8592; Return to DS Hypothesis</button>
+            <button class="nav-btn" onclick="goSlide(22,1)">Go to Infant 2 &#9654;</button>
         </div>
         <div style="max-width: 1100px; margin: 0 auto;">
             <h2 style="text-align:center; color:#2d7a7a; margin-bottom:16px;">Infant 1</h2>
@@ -791,10 +1065,10 @@
     </div>
 
     <!-- ══════════ SLIDE 15: INFANT 2 (LSDC) ══════════ -->
-    <div id="slide15" class="slide">
+    <div id="slide23" class="slide">
         <div class="nav-bar">
-            <button class="nav-btn" onclick="goSlide(15,-1)">&#8592; Return to Infant 1</button>
-            <button class="nav-btn" onclick="goSlide(15,1)">Go to Infant 3 &#9654;</button>
+            <button class="nav-btn" onclick="goSlide(23,-1)">&#8592; Return to Infant 1</button>
+            <button class="nav-btn" onclick="goSlide(23,1)">Go to Infant 3 &#9654;</button>
         </div>
         <div style="max-width: 1100px; margin: 0 auto;">
             <h2 style="text-align:center; color:#2d7a7a; margin-bottom:16px;">Infant 2</h2>
@@ -849,10 +1123,10 @@
     </div>
 
     <!-- ══════════ SLIDE 16: INFANT 3 (LSLC) ══════════ -->
-    <div id="slide16" class="slide">
+    <div id="slide24" class="slide">
         <div class="nav-bar">
-            <button class="nav-btn" onclick="goSlide(16,-1)">&#8592; Return to Infant 2</button>
-            <button class="nav-btn" onclick="goSlide(16,1)">Go to Part 2 Summary &#9654;</button>
+            <button class="nav-btn" onclick="goSlide(24,-1)">&#8592; Return to Infant 2</button>
+            <button class="nav-btn" onclick="goSlide(24,1)">Go to Part 2 Summary &#9654;</button>
         </div>
         <div style="max-width: 1100px; margin: 0 auto;">
             <h2 style="text-align:center; color:#2d7a7a; margin-bottom:16px;">Infant 3</h2>
@@ -907,10 +1181,10 @@
     </div>
 
     <!-- ══════════ SLIDE 17: PART 2 SUMMARY ══════════ -->
-    <div id="slide17" class="slide">
+    <div id="slide25" class="slide">
         <div class="nav-bar">
-            <button class="nav-btn" onclick="goSlide(17,-1)">&#8592; Return to Infant 3</button>
-            <button class="nav-btn" onclick="goSlide(17,1)">Go to Conclusion &#9654;</button>
+            <button class="nav-btn" onclick="goSlide(25,-1)">&#8592; Return to Infant 3</button>
+            <button class="nav-btn" onclick="goSlide(25,1)">Go to Conclusion &#9654;</button>
         </div>
         <div style="max-width: 960px; margin: 0 auto; color: #0d2a2a; font-size: 14px; line-height: 1.7;">
             <div class="latdiag-title-box">Evolution of Primate Diagonal Sequence Gait: Small Branch Stability</div>
@@ -947,13 +1221,18 @@
                     </video>
                 </div>
             </div>
+            <div style="margin-top:20px; text-align:center;">
+                <button onclick="generateAnswerSheet()" style="padding:14px 40px; font-size:15px; background:#2d7a7a; color:white; border:none; border-radius:8px; cursor:pointer;">
+                    &#128438; Generate Answer Sheet (opens in new tab)
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- ══════════ SLIDE 18: CONCLUSION ══════════ -->
-    <div id="slide18" class="slide">
+    <div id="slide26" class="slide">
         <div class="nav-bar">
-            <button class="nav-btn" onclick="goSlide(18,-1)">&#8592; Return to Part 2 Summary</button>
+            <button class="nav-btn" onclick="goSlide(26,-1)">&#8592; Return to Part 2 Summary</button>
             <button class="nav-btn" disabled>End</button>
         </div>
         <div style="max-width: 700px; margin: 0 auto; text-align: center; color: #0d2a2a;">
@@ -970,7 +1249,7 @@
 
 <script>
     // ── SLIDE NAVIGATION ──
-    const TOTAL_SLIDES = 18;
+    const TOTAL_SLIDES = 26;
     function goSlide(current, dir) {
         const next = current + dir;
         if (next < 1 || next > TOTAL_SLIDES) return;
@@ -978,23 +1257,149 @@
         document.getElementById('slide' + next).classList.add('active');
     }
 
+    // ── ANIMAL SLIDE DATA ──────────────────────────
+    var animalData = {};
+    for (var i = 11; i <= 19; i++) {
+        animalData[i] = { hindlimbTD: null, forelimbTD: null, hindlimbLO: null, hindlimbTD2: null };
+    }
+
+    function animalMark(slideNum, key) {
+        var v = document.getElementById('vid' + slideNum);
+        v.pause();
+        var frame = Math.floor(v.currentTime * 30);
+        animalData[slideNum][key] = frame;
+        document.getElementById('v' + slideNum + '_' + key).textContent = frame;
+        // update frame display
+        document.getElementById('frame' + slideNum).textContent = 'Frame: ' + frame;
+    }
+
+    function animalNext(slideNum) {
+        var nextSlide = slideNum + 1;
+        // pause current video
+        var v = document.getElementById('vid' + slideNum);
+        if (v) v.pause();
+        if (nextSlide === 20) {
+            // go to comparative
+            goToComparative();
+        } else {
+            goSlide(slideNum, 1);
+        }
+    }
+
+    function animalCalculate(slideNum, name) {
+        var d = animalData[slideNum];
+        if (d.hindlimbTD === null || d.forelimbTD === null || d.hindlimbLO === null || d.hindlimbTD2 === null) {
+            alert('Please mark all four gait events before calculating.');
+            return;
+        }
+        if (d.hindlimbTD2 <= d.hindlimbTD) {
+            alert('Hindlimb TD2 must be after Hindlimb TD.');
+            return;
+        }
+        var strideDuration = d.hindlimbTD2 - d.hindlimbTD;
+        var stanceDuration = d.hindlimbLO - d.hindlimbTD;
+        var dutyFactor = Math.round((stanceDuration / strideDuration) * 100);
+        var limbPhase = ((d.forelimbTD - d.hindlimbTD) / strideDuration) * 100;
+        if (limbPhase < 0) limbPhase += 100;
+        if (limbPhase > 100) limbPhase -= 100;
+        var gaitNumber = Math.round(limbPhase);
+        var gaitType = '';
+        if (dutyFactor > 50) {
+            if      (gaitNumber >= 1  && gaitNumber <= 24) gaitType = 'LSLC (Lateral Sequence, Lateral Couplets)';
+            else if (gaitNumber >= 25 && gaitNumber <= 49) gaitType = 'LSDC (Lateral Sequence, Diagonal Couplets)';
+            else if (gaitNumber >= 51 && gaitNumber <= 74) gaitType = 'DSDC (Diagonal Sequence, Diagonal Couplets)';
+            else if (gaitNumber >= 76 && gaitNumber <= 99) gaitType = 'DSLC (Diagonal Sequence, Lateral Couplets)';
+            else gaitType = 'Indeterminate (boundary value)';
+        } else {
+            gaitType = 'Running gait (\u2264 50% DF)';
+        }
+        document.getElementById('r' + slideNum + '_df').textContent = dutyFactor + '%';
+        document.getElementById('r' + slideNum + '_gn').textContent = gaitNumber;
+        document.getElementById('r' + slideNum + '_gt').textContent = gaitType;
+        document.getElementById('res' + slideNum).style.display = 'block';
+
+        // store/update in userDataPoints
+        userDataPoints = userDataPoints.filter(function(p) { return p.slideNum !== slideNum; });
+        userDataPoints.push({ slideNum: slideNum, name: name, gaitNumber: gaitNumber, dutyFactor: dutyFactor });
+
+        // redraw all animal plots
+        for (var i = 11; i <= 19; i++) {
+            if (document.getElementById('plot' + i)) drawAnimalPlot(i);
+        }
+    }
+
+    function drawAnimalPlot(slideNum) {
+        var container = document.getElementById('plot' + slideNum);
+        if (!container) return;
+        var width = 320, height = 320, padding = 75;
+        var toX = function(val) { return padding + (val/100)*(width-2*padding); };
+        var toY = function(val) { return padding + (val/100)*(height-2*padding); };
+        var html = '<svg width="' + width + '" height="' + height + '" xmlns="http://www.w3.org/2000/svg">';
+        var regions = [
+            { label: 'LSLC (1-24)',  y1: 1,  y2: 24, color: '#c8eac8' },
+            { label: 'LSDC (25-49)', y1: 25, y2: 49, color: '#c8c8ea' },
+            { label: 'DSDC (51-74)', y1: 51, y2: 74, color: '#eae0c8' },
+            { label: 'DSLC (76-99)', y1: 76, y2: 99, color: '#eac8d8' },
+        ];
+        regions.forEach(function(r) {
+            var ry1 = toY(r.y1), ry2 = toY(r.y2);
+            html += '<rect x="' + padding + '" y="' + ry1 + '" width="' + (width-2*padding) + '" height="' + (ry2-ry1) + '" fill="' + r.color + '" opacity="0.8"/>';
+            html += '<text x="' + (padding-4) + '" y="' + ((ry1+ry2)/2+4) + '" text-anchor="end" font-size="8" fill="#444" font-style="italic">' + r.label + '</text>';
+        });
+        html += '<line x1="' + padding + '" y1="' + (height-padding) + '" x2="' + (width-padding) + '" y2="' + (height-padding) + '" stroke="black" stroke-width="2"/>';
+        html += '<line x1="' + padding + '" y1="' + padding + '" x2="' + padding + '" y2="' + (height-padding) + '" stroke="black" stroke-width="2"/>';
+        html += '<text x="' + (width/2) + '" y="' + (height-4) + '" text-anchor="middle" font-size="11" font-weight="bold">Duty Factor (%)</text>';
+        html += '<text x="10" y="' + (height/2) + '" text-anchor="middle" font-size="11" font-weight="bold" transform="rotate(-90,10,' + (height/2) + ')">Gait Number</text>';
+        [0,25,50,75,100].forEach(function(val) {
+            var x = toX(val);
+            html += '<line x1="' + x + '" y1="' + (height-padding) + '" x2="' + x + '" y2="' + (height-padding+4) + '" stroke="black" stroke-width="1"/>';
+            html += '<text x="' + x + '" y="' + (height-padding+13) + '" text-anchor="middle" font-size="9">' + val + '</text>';
+        });
+        [0,25,50,75,100].forEach(function(val) {
+            var y = toY(val);
+            html += '<line x1="' + (padding-4) + '" y1="' + y + '" x2="' + padding + '" y2="' + y + '" stroke="black" stroke-width="1"/>';
+            html += '<text x="' + (padding-6) + '" y="' + (y+3) + '" text-anchor="end" font-size="9">' + val + '</text>';
+        });
+        // reference points
+        var refs = [
+            { animal: 'feline',   gaitNumber: 25, dutyFactor: 58 },
+            { animal: 'equine',   gaitNumber: 50, dutyFactor: 62 },
+            { animal: 'hipparian',gaitNumber: 50, dutyFactor: 55 },
+            { animal: 'primates', gaitNumber: 75, dutyFactor: 65 }
+        ];
+        refs.forEach(function(r) {
+            var x = toX(r.dutyFactor), y = toY(r.gaitNumber);
+            html += '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-size="13" font-weight="bold" fill="orange">*</text>';
+            html += '<text x="' + (x+7) + '" y="' + (y-4) + '" font-size="8" fill="darkorange">' + r.animal + '</text>';
+        });
+        // user points
+        userDataPoints.forEach(function(pt) {
+            var ux = toX(pt.dutyFactor), uy = toY(pt.gaitNumber);
+            html += '<circle cx="' + ux + '" cy="' + uy + '" r="5" fill="blue"/>';
+            html += '<text x="' + (ux+8) + '" y="' + (uy-4) + '" font-size="8" fill="blue">' + pt.name + '</text>';
+        });
+        html += '</svg>';
+        container.innerHTML = html;
+    }
+
     function goToComparative() {
-        document.getElementById('slide11').classList.remove('active');
-        document.getElementById('slide12').classList.add('active');
+        // hide all animal slides, show slide20
+        for (var i = 11; i <= 19; i++) {
+            var s = document.getElementById('slide' + i);
+            if (s) s.classList.remove('active');
+        }
+        document.getElementById('slide20').classList.add('active');
         drawComparativePlot();
     }
 
     function returnToVideos() {
-        document.getElementById('slide12').classList.remove('active');
-        document.getElementById('slide11').classList.add('active');
-        // Return to video list within the lab
-        document.getElementById('setupSection').style.display = 'block';
-        document.getElementById('labSection').style.display = 'none';
+        document.getElementById('slide20').classList.remove('active');
+        document.getElementById('slide19').classList.add('active');
     }
 
     function goDSHypothesis() {
-        document.getElementById('slide12').classList.remove('active');
-        document.getElementById('slide13').classList.add('active');
+        document.getElementById('slide20').classList.remove('active');
+        document.getElementById('slide21').classList.add('active');
     }
 
     // ── INTRO VIDEO HELPERS ──
@@ -1003,94 +1408,14 @@
         v.currentTime += dir / 30;
     }
 
-    // ── LAB STATE ──
-    let video = document.getElementById('gaitVideo');
-    let currentVideoName = '';
-    let data = { hindlimbTD: null, forelimbTD: null, hindlimbLO: null, hindlimbTD2: null };
-    let userDataPoints = [];
-    const referenceData = [];
-
-    function selectVideo(url, name) {
-        currentVideoName = name;
-        video.src = url;
-        document.getElementById('videoTitle').textContent = name;
-        document.getElementById('setupSection').style.display = 'none';
-        document.getElementById('labSection').style.display = 'block';
-        document.getElementById('eventSection').style.display = 'block';
-        document.getElementById('resultsBox').style.display = 'none';
-        data = { hindlimbTD: null, forelimbTD: null, hindlimbLO: null, hindlimbTD2: null };
-        ['hindlimbTD','forelimbTD','hindlimbLO','hindlimbTD2'].forEach(k => {
-            document.getElementById('val_' + k).textContent = '\u2014';
-        });
-        updateFrameDisplay();
-        drawPlot();
-    }
-
-    function goToVideoList() {
-        document.getElementById('setupSection').style.display = 'block';
-        document.getElementById('labSection').style.display = 'none';
-        video.pause();
-        video.src = '';
-    }
-
-    function stepFrame(direction) {
-        video.currentTime += (direction / 30);
-        updateFrameDisplay();
-    }
-
-    function updateFrameDisplay() {
-        const frame = Math.floor(video.currentTime * 30);
-        document.getElementById('frameInfo').textContent = 'Frame: ' + frame;
-    }
-
-    function markEvent(eventName) {
-        video.pause();
-        const frame = Math.floor(video.currentTime * 30);
-        data[eventName] = frame;
-        document.getElementById('val_' + eventName).textContent = frame;
-    }
-
-    function calculate() {
-        const { hindlimbTD, forelimbTD, hindlimbLO, hindlimbTD2 } = data;
-
-        if (hindlimbTD === null || forelimbTD === null || hindlimbLO === null || hindlimbTD2 === null) {
-            alert('Please mark all four gait events before calculating.');
-            return;
-        }
-        if (hindlimbTD2 <= hindlimbTD) {
-            alert('Hindlimb TD2 must be after Hindlimb TD.');
-            return;
-        }
-
-        const strideDuration = hindlimbTD2 - hindlimbTD;
-        const stanceDuration = hindlimbLO - hindlimbTD;
-        const dutyFactor = Math.round((stanceDuration / strideDuration) * 100);
-
-        let limbPhase = ((forelimbTD - hindlimbTD) / strideDuration) * 100;
-        if (limbPhase < 0) limbPhase += 100;
-        if (limbPhase > 100) limbPhase -= 100;
-        const gaitNumber = Math.round(limbPhase);
-
-        let gaitType = '';
-        if (dutyFactor > 50) {
-            if      (gaitNumber >= 1  && gaitNumber <= 24) gaitType = 'LSLC (Lateral Sequence, Lateral Couplets)';
-            else if (gaitNumber >= 25 && gaitNumber <= 49) gaitType = 'LSDC (Lateral Sequence, Diagonal Couplets)';
-            else if (gaitNumber >= 51 && gaitNumber <= 74) gaitType = 'DSDC (Diagonal Sequence, Diagonal Couplets)';
-            else if (gaitNumber >= 76 && gaitNumber <= 99) gaitType = 'DSLC (Diagonal Sequence, Lateral Couplets)';
-            else gaitType = 'Indeterminate (boundary value)';
-        } else {
-            gaitType = 'Running gait (Duty Factor \u2264 50%)';
-        }
-
-        document.getElementById('result_dutyFactor').textContent = dutyFactor + '%';
-        document.getElementById('result_gaitNumber').textContent = gaitNumber;
-        document.getElementById('result_gaitType').textContent = gaitType;
-
-        userDataPoints.push({ gaitNumber, dutyFactor, name: currentVideoName });
-        document.getElementById('eventSection').style.display = 'none';
-        document.getElementById('resultsBox').style.display = 'block';
-        drawPlot();
-    }
+    // ── SHARED DATA ──
+    let userDataPoints = [];  // populated by animalCalculate()
+    const referenceData = [
+        { animal: 'feline',    gaitNumber: 25, dutyFactor: 58 },
+        { animal: 'equine',    gaitNumber: 50, dutyFactor: 62 },
+        { animal: 'hipparian', gaitNumber: 50, dutyFactor: 55 },
+        { animal: 'primates',  gaitNumber: 75, dutyFactor: 65 }
+    ];
 
     function drawPlot() {
         const width = 350, height = 350, padding = 75;
@@ -1478,8 +1803,9 @@
         win.document.close();
     }
 
-    video.addEventListener('timeupdate', updateFrameDisplay);
-    drawPlot();
+    // Initialize all plots on load
+    drawPracticePlot();
+    for (var i = 11; i <= 19; i++) { drawAnimalPlot(i); }
 </script>
 </body>
 </html>
