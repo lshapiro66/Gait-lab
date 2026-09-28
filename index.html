@@ -344,7 +344,7 @@
                         <button class="vcbtn" onclick="vidStep('lionTrotVideo',1)">+1f &#9658;</button>
                         <button class="vcbtn" onclick="vidStep('lionTrotVideo',5)">+5f &#9658;&#9658;</button>
                     </div>
-                    <div class="quiz-q">Q5. Identify the animal's running gait.
+                    <div class="quiz-q">Q5. Identify the lion's running gait.
                         <label><input type="radio" name="q5" value="trot"> Trot</label>
                         <label><input type="radio" name="q5" value="pace"> Pace</label>
                     </div>
@@ -360,7 +360,7 @@
                         <button class="vcbtn" onclick="vidStep('horsePaceVideo',1)">+1f &#9658;</button>
                         <button class="vcbtn" onclick="vidStep('horsePaceVideo',5)">+5f &#9658;&#9658;</button>
                     </div>
-                    <div class="quiz-q">Q6. Identify the animal's running gait.
+                    <div class="quiz-q">Q6. Identify the horse's running gait.
                         <label><input type="radio" name="q6" value="trot"> Trot</label>
                         <label><input type="radio" name="q6" value="pace"> Pace</label>
                     </div>
@@ -1646,10 +1646,29 @@
             s += '<line x1="' + (padding-4) + '" y1="' + y + '" x2="' + padding + '" y2="' + y + '" stroke="black" stroke-width="1"/>';
             s += '<text x="' + (padding-6) + '" y="' + (y+3) + '" text-anchor="end" font-size="10">' + val + '</text>';
         });
+        // reference points
+        var refs = [
+            { animal: 'feline',    gaitNumber: 25, dutyFactor: 58 },
+            { animal: 'equine',    gaitNumber: 50, dutyFactor: 62 },
+            { animal: 'hipparian', gaitNumber: 50, dutyFactor: 55 },
+            { animal: 'primates',  gaitNumber: 75, dutyFactor: 65 }
+        ];
+        refs.forEach(function(r) {
+            var x = toX(r.dutyFactor), y = toY(r.gaitNumber);
+            s += '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-size="14" font-weight="bold" fill="orange">*</text>';
+            s += '<text x="' + (x+8) + '" y="' + (y-4) + '" font-size="9" fill="darkorange">' + r.animal + '</text>';
+        });
+        // main lab points (blue)
         userDataPoints.forEach(function(point) {
             var ux = toX(point.dutyFactor), uy = toY(point.gaitNumber);
             s += '<circle cx="' + ux + '" cy="' + uy + '" r="6" fill="blue"/>';
             s += '<text x="' + (ux+9) + '" y="' + (uy-4) + '" font-size="10" fill="blue">' + point.name + '</text>';
+        });
+        // infant points (red)
+        infantDataPoints.forEach(function(point) {
+            var ux = toX(point.dutyFactor), uy = toY(point.gaitNumber);
+            s += '<circle cx="' + ux + '" cy="' + uy + '" r="6" fill="red"/>';
+            s += '<text x="' + (ux+9) + '" y="' + (uy-4) + '" font-size="10" fill="red">' + point.label + '</text>';
         });
         s += '</svg>';
         return s;
@@ -1669,9 +1688,9 @@
               options: { ipsi: 'The Ipsilateral Forelimb', contra: 'The Contralateral Forelimb' } },
             { q: 'Q4', label: 'What type of gait sequence is being used? (Elephant)', name: 'q4',
               options: { lateral: 'Lateral Sequence Gait', diagonal: 'Diagonal Sequence Gait' } },
-            { q: 'Q5', label: 'Identify the animal\'s running gait. (Lion)', name: 'q5',
+            { q: 'Q5', label: 'Identify the lion\'s running gait.', name: 'q5',
               options: { trot: 'Trot', pace: 'Pace' } },
-            { q: 'Q6', label: 'Identify the animal\'s running gait. (Horse)', name: 'q6',
+            { q: 'Q6', label: 'Identify the horse\'s running gait.', name: 'q6',
               options: { trot: 'Trot', pace: 'Pace' } },
             { q: 'Q7', label: 'Is this a transverse or rotary gallop? (Lion 1)', name: 'q7',
               options: { transverse: 'Transverse', rotary: 'Rotary' } },
